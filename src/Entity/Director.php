@@ -13,9 +13,7 @@ class Director extends StaffMember
     #[ORM\Column]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'directors')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Composer $composer = null;
+ 
 
     public function getId(): ?int
     {
