@@ -19,26 +19,25 @@ class Movie
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $releaseDate = null;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $releaseDate = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $synopsis = null;
 
-    #[ORM\ManyToMany(targetEntity: Actor::class)]
+    #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
     private Collection $actors;
 
     #[ORM\ManyToMany(targetEntity: Director::class)]
-    private Collection $Directors;
+    private Collection $directors;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Composer $composers = null;
+    private ?Composer $composer = null;
 
     public function __construct()
     {
         $this->actors = new ArrayCollection();
-        $this->Directors = new ArrayCollection();
+        $this->directors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,12 +57,12 @@ class Movie
         return $this;
     }
 
-    public function getReleaseDate(): ?\DateTimeInterface
+    public function getReleaseDate(): ?\DateTimeImmutable
     {
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(\DateTimeInterface $releaseDate): self
+    public function setReleaseDate(\DateTimeImmutable $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
 
@@ -75,7 +74,7 @@ class Movie
         return $this->synopsis;
     }
 
-    public function setSynopsis(string $synopsis): self
+    public function setSynopsis(?string $synopsis): self
     {
         $this->synopsis = $synopsis;
 
@@ -111,13 +110,13 @@ class Movie
      */
     public function getDirectors(): Collection
     {
-        return $this->Directors;
+        return $this->directors;
     }
 
     public function addDirector(Director $director): self
     {
-        if (!$this->Directors->contains($director)) {
-            $this->Directors->add($director);
+        if (!$this->directors->contains($director)) {
+            $this->directors->add($director);
         }
 
         return $this;
@@ -125,19 +124,19 @@ class Movie
 
     public function removeDirector(Director $director): self
     {
-        $this->Directors->removeElement($director);
+        $this->directors->removeElement($director);
 
         return $this;
     }
 
-    public function getComposers(): ?Composer
+    public function getComposer(): ?Composer
     {
-        return $this->composers;
+        return $this->composer;
     }
 
-    public function setComposers(?Composer $composers): self
+    public function setComposer(?Composer $composer): self
     {
-        $this->composers = $composers;
+        $this->composer = $composer;
 
         return $this;
     }
