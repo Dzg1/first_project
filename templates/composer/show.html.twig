@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Composer{% endblock %}
+
+{% block body %}
+    <h1>Composer</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ composer.id }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ composer.firstName }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ composer.lastName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_composer_index') }}">back to list</a>
+
+    <a href="{{ path('app_composer_edit', {'id': composer.id}) }}">edit</a>
+
+    {{ include('composer/_delete_form.html.twig') }}
+{% endblock %}
