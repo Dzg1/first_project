@@ -22,15 +22,4 @@ class Director extends StaffMember
         return $this->id;
     }
 
-    public function getComposer(): ?Composer
-    {
-        return $this->composer;
-    }
-
-    public function setComposer(?Composer $composer): self
-    {
-        $this->composer = $composer;
-
-        return $this;
-    }
 }
